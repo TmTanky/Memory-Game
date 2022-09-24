@@ -1,0 +1,20 @@
+.cards {
+    height: 100px;
+    width: 100%;
+    background-color: red;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.card {
+    width: 200px;
+    height: 200px;
+    margin: 15px;
+    border-radius: 8px;
+    border: solid 2px black;
+}
+
+/* .hide {
+    transform: rotatey(180deg);
+} */
