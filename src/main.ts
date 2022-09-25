@@ -1,4 +1,7 @@
 const rootCardsContainer = document.querySelector('.cards') as HTMLDivElement
+const restartButton = document.querySelector(
+  '.restart-button'
+) as HTMLButtonElement
 
 const matchers = ['heart', 'heart', 'diamond', 'diamond', 'circle', 'circle']
 
@@ -16,7 +19,6 @@ const createCards = () => {
     cardContainer.appendChild(back)
 
     front.classList.add('front-card')
-    front.innerText = item
     back.classList.add('back-card')
     rootCardsContainer.appendChild(cardContainer)
     cardContainer.classList.add('card')
@@ -39,15 +41,14 @@ let secondPickId: string
 cards.forEach((item) => {
   item.addEventListener('click', (e) => {
     const event = e.target as HTMLButtonElement
-    // item.classList.add('show')
 
     pickCounter = pickCounter + 1
-    
+
     if (pickCounter === 1) {
       firstPick = event.value as string
       firstPickId = event.id
     }
-    
+
     if (pickCounter === 2) {
       secondPick = event.value as string
       secondPickId = event.id
@@ -67,4 +68,21 @@ cards.forEach((item) => {
       secondPickId = ''
     }
   })
+})
+
+const cardsObserver = new MutationObserver((mutations) => {
+  const cardsLength = mutations[0].target.childNodes.length
+
+  if (cardsLength === 0) {
+    restartButton.style.display = 'initial'
+  }
+})
+
+cardsObserver.observe(rootCardsContainer, {
+  childList: true,
+})
+
+restartButton?.addEventListener('click', () => {
+  restartButton.style.display = 'none'
+  createCards()
 })
