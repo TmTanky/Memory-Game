@@ -1,18 +1,47 @@
 .cards {
-    height: 100px;
-    width: 100%;
-    background-color: red;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative;
 }
 
 .card {
-    width: 200px;
-    height: 200px;
-    margin: 15px;
-    border-radius: 8px;
-    border: solid 2px black;
+  width: 200px;
+  height: 200px;
+  margin: 15px;
+  border-radius: 8px;
+  border: solid 2px black;
+}
+
+.show {
+  transition: ease-out;
+  transition-duration: 0.5s;
+  transform: rotateY(180deg);
+  transform-style: preserve-3d;
+}
+
+.front {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: yellow;
+}
+
+.back {
+  backface-visibility: hidden;
+  background-color: blue;
+  transform: rotateY(180deg);
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
 }
 
 /* .hide {
