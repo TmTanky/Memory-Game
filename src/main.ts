@@ -1,3 +1,34 @@
+const gameMenu = document.createElement('div')
+const gameTitle = document.createElement('h1')
+gameTitle.innerHTML = 'Memory Game'
+gameMenu.classList.add('game-menu-container')
+const exitButton = document.createElement('button')
+const startButton = document.createElement('button')
+const topPortion = document.createElement('div')
+const bottomPortion = document.createElement('div')
+
+exitButton.innerText = 'Exit'
+startButton.innerText = 'Play Game'
+
+document.body.appendChild(gameMenu)
+gameMenu.appendChild(topPortion)
+gameMenu.appendChild(bottomPortion)
+
+topPortion.appendChild(gameTitle)
+
+bottomPortion.appendChild(exitButton)
+bottomPortion.appendChild(startButton)
+
+startButton.addEventListener('click', () => {
+  gameMenu.style.visibility = 'hidden'
+})
+
+exitButton.addEventListener('click', () => {
+  window.close()
+})
+
+// Creating Cards Logic
+
 const rootCardsContainer = document.querySelector('.cards') as HTMLDivElement
 const restartButton = document.querySelector(
   '.restart-button'
@@ -29,6 +60,8 @@ const createCards = () => {
 }
 
 createCards()
+
+// Card Functionality
 
 const cards = document.querySelectorAll('.card')
 
@@ -69,6 +102,8 @@ cards.forEach((item) => {
     }
   })
 })
+
+// Reset Game Logic
 
 const cardsObserver = new MutationObserver((mutations) => {
   const cardsLength = mutations[0].target.childNodes.length

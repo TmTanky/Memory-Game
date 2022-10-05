@@ -48,6 +48,17 @@
     display: none;
 }
 
-/* .hide {
-    transform: rotatey(180deg);
-} */
+/* Game Menu Styling */
+
+.game-menu-container {
+  display: flex;
+  top: 0;
+  left: 0;
+  position: fixed;
+  background-color: white;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
