@@ -1,11 +1,14 @@
+// Initialize Game Menu
+
 const gameMenu = document.createElement('div')
 const gameTitle = document.createElement('h1')
-gameTitle.innerHTML = 'Memory Game'
-gameMenu.classList.add('game-menu-container')
 const exitButton = document.createElement('button')
 const startButton = document.createElement('button')
 const topPortion = document.createElement('div')
 const bottomPortion = document.createElement('div')
+
+gameTitle.innerHTML = 'Memory Game'
+gameMenu.classList.add('game-menu-container')
 
 exitButton.innerText = 'Exit'
 startButton.innerText = 'Play Game'
@@ -21,26 +24,69 @@ bottomPortion.appendChild(startButton)
 
 startButton.addEventListener('click', () => {
   gameMenu.style.visibility = 'hidden'
+  createCards()
 })
 
 exitButton.addEventListener('click', () => {
   window.close()
 })
 
-// Creating Cards Logic
+// Card Functionality
 
-const rootCardsContainer = document.querySelector('.cards') as HTMLDivElement
-const restartButton = document.querySelector(
-  '.restart-button'
-) as HTMLButtonElement
+const startCardsFunctionality = () => {
+  const cards = document.querySelectorAll('.card')
 
-const matchers = ['heart', 'heart', 'diamond', 'diamond', 'circle', 'circle']
+  let pickCounter = 0
+  let firstPick: string
+  let secondPick: string
+  let firstPickId: string
+  let secondPickId: string
 
-const shuffleCards = (arr: string[]) => {
-  return arr.sort(() => 0.5 - Math.random())
+  cards.forEach((item) => {
+    item.addEventListener('click', (e) => {
+      const event = e.target as HTMLButtonElement
+      pickCounter = pickCounter + 1
+
+      if (pickCounter === 1) {
+        firstPick = event.value as string
+        firstPickId = event.id
+      }
+
+      if (pickCounter === 2) {
+        secondPick = event.value as string
+        secondPickId = event.id
+      }
+
+      if (firstPick === secondPick && firstPickId !== secondPickId) {
+        document.querySelector(`#${firstPickId}`)?.remove()
+        document.querySelector(`#${secondPickId}`)?.remove()
+      }
+
+      if (pickCounter === 2) {
+        pickCounter = 0
+        firstPick = ''
+        secondPick = ''
+        firstPickId = ''
+        secondPickId = ''
+      }
+    })
+  })
 }
 
+// Creating Cards Logic
+
+const rootCards = document.createElement('div')
+rootCards.classList.add('cards')
+
 const createCards = () => {
+  document.body.appendChild(rootCards)
+
+  const matchers = ['heart', 'heart', 'diamond', 'diamond', 'circle', 'circle']
+
+  const shuffleCards = (arr: string[]) => {
+    return arr.sort(() => 0.5 - Math.random())
+  }
+
   shuffleCards(matchers).forEach((item, index) => {
     const cardContainer = document.createElement('button')
     const front = document.createElement('div')
@@ -51,59 +97,24 @@ const createCards = () => {
 
     front.classList.add('front-card')
     back.classList.add('back-card')
-    rootCardsContainer.appendChild(cardContainer)
+    rootCards.appendChild(cardContainer)
     cardContainer.classList.add('card')
     front.innerText = item
     cardContainer.value = item
     cardContainer.id = `${item}${index}`
   })
+  startCardsFunctionality()
 }
 
-createCards()
-
-// Card Functionality
-
-const cards = document.querySelectorAll('.card')
-
-let pickCounter = 0
-let firstPick: string
-let secondPick: string
-let firstPickId: string
-let secondPickId: string
-
-cards.forEach((item) => {
-  item.addEventListener('click', (e) => {
-    const event = e.target as HTMLButtonElement
-
-    pickCounter = pickCounter + 1
-
-    if (pickCounter === 1) {
-      firstPick = event.value as string
-      firstPickId = event.id
-    }
-
-    if (pickCounter === 2) {
-      secondPick = event.value as string
-      secondPickId = event.id
-    }
-
-    if (firstPick === secondPick && firstPickId !== secondPickId) {
-      document.querySelector(`#${firstPickId}`)?.remove()
-      document.querySelector(`#${secondPickId}`)?.remove()
-      // alert('score')
-    }
-
-    if (pickCounter === 2) {
-      pickCounter = 0
-      firstPick = ''
-      secondPick = ''
-      firstPickId = ''
-      secondPickId = ''
-    }
-  })
-})
-
 // Reset Game Logic
+
+const rootCardsContainer = document.querySelector('.cards') as HTMLDivElement
+const restartButton = document.querySelector(
+  '.restart-button'
+) as HTMLButtonElement
+const backToMenuButton = document.querySelector(
+  '.back-to-menu-button'
+) as HTMLButtonElement
 
 const cardsObserver = new MutationObserver((mutations) => {
   const cardsLength = mutations[0].target.childNodes.length
@@ -113,11 +124,29 @@ const cardsObserver = new MutationObserver((mutations) => {
   }
 })
 
-cardsObserver.observe(rootCardsContainer, {
-  childList: true,
+if (rootCardsContainer) {
+  cardsObserver.observe(rootCardsContainer, {
+    childList: true,
+  })
+}
+
+restartButton.addEventListener('click', () => {
+  const cards = document.querySelectorAll('.card')
+  cards.forEach((node) => {
+    node.remove()
+  })
+
+  createCards()
 })
 
-restartButton?.addEventListener('click', () => {
-  restartButton.style.display = 'none'
-  createCards()
+// Back To Menu Logic
+
+backToMenuButton.addEventListener('click', () => {
+  const cards = document.querySelectorAll('.card')
+  cards.forEach((node) => {
+    node.remove()
+  })
+
+  gameMenu.style.visibility = 'visible'
+  rootCards.remove()
 })
