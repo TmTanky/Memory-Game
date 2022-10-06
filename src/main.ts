@@ -1,11 +1,21 @@
-// Initialize Game Menu
-
+// Game Menu Vars
 const gameMenu = document.createElement('div')
 const gameTitle = document.createElement('h1')
 const exitButton = document.createElement('button')
 const startButton = document.createElement('button')
 const topPortion = document.createElement('div')
 const bottomPortion = document.createElement('div')
+
+// Winner Vars
+
+const winnerContainer = document.createElement('div')
+const winnerHeading = document.createElement('h2')
+
+// Card/Cards Vars
+
+const rootCards = document.createElement('div')
+
+// Initialize Game Menu
 
 gameTitle.innerHTML = 'Memory Game'
 gameMenu.classList.add('game-menu-container')
@@ -25,15 +35,29 @@ bottomPortion.appendChild(startButton)
 startButton.addEventListener('click', () => {
   gameMenu.style.visibility = 'hidden'
   createCards()
+  winnerHeading?.remove()
+  winnerContainer?.remove()
 })
 
 exitButton.addEventListener('click', () => {
   window.close()
 })
 
+// Winner Announcer
+
+const announceWinner = () => {
+  winnerContainer.classList.add('winner-container')
+  winnerHeading.classList.add('winner-heading')
+
+  document.body.appendChild(winnerContainer)
+  winnerContainer.appendChild(winnerHeading)
+  winnerHeading.innerText = 'You win!'
+}
+
 // Card Functionality
 
 const startCardsFunctionality = () => {
+  const rootCardsContainer = document.querySelector('.cards') as HTMLDivElement
   const cards = document.querySelectorAll('.card')
 
   let pickCounter = 0
@@ -71,11 +95,22 @@ const startCardsFunctionality = () => {
       }
     })
   })
+
+  const cardsObserver = new MutationObserver((mutations) => {
+    const cardsLength = mutations[0].target.childNodes.length
+
+    if (cardsLength === 0) {
+      announceWinner()
+    }
+  })
+
+  cardsObserver.observe(rootCardsContainer, {
+    childList: true,
+  })
 }
 
-// Creating Cards Logic
+// Creating Cards & Starting Game Logic
 
-const rootCards = document.createElement('div')
 rootCards.classList.add('cards')
 
 const createCards = () => {
@@ -108,27 +143,12 @@ const createCards = () => {
 
 // Reset Game Logic
 
-const rootCardsContainer = document.querySelector('.cards') as HTMLDivElement
 const restartButton = document.querySelector(
   '.restart-button'
 ) as HTMLButtonElement
 const backToMenuButton = document.querySelector(
   '.back-to-menu-button'
 ) as HTMLButtonElement
-
-const cardsObserver = new MutationObserver((mutations) => {
-  const cardsLength = mutations[0].target.childNodes.length
-
-  if (cardsLength === 0) {
-    restartButton.style.display = 'initial'
-  }
-})
-
-if (rootCardsContainer) {
-  cardsObserver.observe(rootCardsContainer, {
-    childList: true,
-  })
-}
 
 restartButton.addEventListener('click', () => {
   const cards = document.querySelectorAll('.card')
@@ -137,6 +157,8 @@ restartButton.addEventListener('click', () => {
   })
 
   createCards()
+  winnerHeading?.remove()
+  winnerContainer?.remove()
 })
 
 // Back To Menu Logic
@@ -149,4 +171,6 @@ backToMenuButton.addEventListener('click', () => {
 
   gameMenu.style.visibility = 'visible'
   rootCards.remove()
+  winnerHeading?.remove()
+  winnerContainer?.remove()
 })
