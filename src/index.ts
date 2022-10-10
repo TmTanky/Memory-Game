@@ -1,3 +1,7 @@
+// Imports 
+
+import './styles/style.css'
+
 // Game Menu Vars
 const gameMenu = document.createElement('div')
 const gameTitle = document.createElement('h1')
