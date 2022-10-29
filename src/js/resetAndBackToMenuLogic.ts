@@ -1,12 +1,5 @@
 import { createCards } from './createCards'
 
-const restartButton = document.querySelector(
-  '.restart-button'
-) as HTMLButtonElement
-const backToMenuButton = document.querySelector(
-  '.back-to-menu-button'
-) as HTMLButtonElement
-
 interface InitializeResetAndBackToMenuProps {
   winner: {
     container: HTMLDivElement
@@ -14,16 +7,21 @@ interface InitializeResetAndBackToMenuProps {
   }
   rootCards: HTMLDivElement
   gameMenu: HTMLDivElement
+  buttons: {
+    back: HTMLButtonElement
+    restart: HTMLButtonElement
+  }
 }
 
 export const initializeResetAndBackToMenu = ({
   gameMenu,
   rootCards,
   winner,
+  buttons: { back, restart }
 }: InitializeResetAndBackToMenuProps) => {
   const { container, heading } = winner
 
-  restartButton.addEventListener('click', () => {
+  restart.addEventListener('click', () => {
     const cards = document.querySelectorAll('.card')
     cards.forEach((node) => {
       node.remove()
@@ -32,14 +30,14 @@ export const initializeResetAndBackToMenu = ({
     createCards(rootCards, {
       container: container,
       heading: heading,
-    })
+    }, restart)
     heading?.remove()
     container?.remove()
   })
 
   // Back To Menu Logic
 
-  backToMenuButton.addEventListener('click', () => {
+  back.addEventListener('click', () => {
     const cards = document.querySelectorAll('.card')
     cards.forEach((node) => {
       node.remove()

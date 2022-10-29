@@ -7,6 +7,7 @@ interface InitializeGameMenuProps {
   buttons: {
     start: HTMLButtonElement
     exit: HTMLButtonElement
+    restart: HTMLButtonElement
   }
   portions: {
     top: HTMLDivElement
@@ -27,8 +28,12 @@ export const initializeGameMenu = ({
   rootCards,
 }: InitializeGameMenuProps) => {
   const { container, heading } = winner
-  const { exit, start } = buttons
+  const { exit, start, restart } = buttons
   const { bottom, top } = portions
+
+  exit.classList.add('exit-game-btn')
+  start.classList.add('start-game-btn')
+  gameTitle.classList.add('game-title')
 
   gameTitle.innerHTML = 'Memory Game'
   gameMenu.classList.add('game-menu-container')
@@ -47,10 +52,14 @@ export const initializeGameMenu = ({
 
   start.addEventListener('click', () => {
     gameMenu.style.display = 'none'
-    createCards(rootCards, {
-      container: container,
-      heading: heading,
-    })
+    createCards(
+      rootCards,
+      {
+        container: container,
+        heading: heading,
+      },
+      restart
+    )
     heading?.remove()
     container?.remove()
   })

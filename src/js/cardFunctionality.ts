@@ -2,7 +2,8 @@ import { announceWinner } from './winnerAnnouncer'
 
 export const startCardsFunctionality = (
   container: HTMLDivElement,
-  heading: HTMLHeadElement
+  heading: HTMLHeadElement,
+  restart: HTMLButtonElement
 ) => {
   const rootCardsContainer = document.querySelector('.cards') as HTMLDivElement
   const cards = document.querySelectorAll('.card')
@@ -47,7 +48,10 @@ export const startCardsFunctionality = (
     const cardsLength = mutations[0].target.childNodes.length
 
     if (cardsLength === 0) {
+      restart.style.display = 'initial'
       announceWinner(container, heading)
+    } else {
+      restart.style.display = 'none'
     }
   })
 
