@@ -22,7 +22,7 @@ const config = {
     host: 'localhost',
     port: 3000,
     liveReload: true,
-    watchFiles: ['./src/index.html', './src/index.ts']
+    watchFiles: ['./src/index.html', './src/index.ts'],
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -47,7 +47,29 @@ const config = {
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
         type: 'asset',
       },
-
+      {
+        test: /\.s[ac]ss$/i,
+        use: [
+          // Creates `style` nodes from JS strings
+          'style-loader',
+          // Translates CSS into CommonJS
+          'css-loader',
+          // Resolve Url imports
+          {
+            loader: 'resolve-url-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
+          // Compiles Sass to CSS
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
+        ],
+      },
       // Add your rules for custom modules here
       // Learn more about loaders from https://webpack.js.org/loaders/
     ],
