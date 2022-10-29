@@ -45,7 +45,7 @@ export const initializeResetAndBackToMenu = ({
       node.remove()
     })
 
-    gameMenu.style.visibility = 'visible'
+    gameMenu.style.display = 'flex'
     rootCards.remove()
     heading?.remove()
     container?.remove()

@@ -24,7 +24,7 @@ export const initializeGameMenu = ({
   winner,
   buttons,
   portions,
-  rootCards
+  rootCards,
 }: InitializeGameMenuProps) => {
   const { container, heading } = winner
   const { exit, start } = buttons
@@ -46,7 +46,7 @@ export const initializeGameMenu = ({
   bottom.appendChild(start)
 
   start.addEventListener('click', () => {
-    gameMenu.style.visibility = 'hidden'
+    gameMenu.style.display = 'none'
     createCards(rootCards, {
       container: container,
       heading: heading,
@@ -56,6 +56,6 @@ export const initializeGameMenu = ({
   })
 
   exit.addEventListener('click', () => {
-    window.close()
+    alert('paganahin to na mag close tab!')
   })
 }
