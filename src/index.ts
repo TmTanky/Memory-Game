@@ -1,6 +1,10 @@
 // Imports
 import './styles/style.scss'
-import { initializeGameMenu, initializeResetAndBackToMenu } from './js/index'
+import {
+  initializeGameMenu,
+  initializeResetAndBackToMenu,
+  initializeGameOptions,
+} from './js/index'
 
 // Game Menu Vars
 const gameMenu = document.createElement('div')
@@ -10,9 +14,15 @@ const startButton = document.createElement('button')
 const topPortion = document.createElement('div')
 const bottomPortion = document.createElement('div')
 
-exitButton.classList.add('exit-game-btn')
-startButton.classList.add('start-game-btn')
-gameTitle.classList.add('game-title')
+// Game Options Vars
+
+const optionsContainer = document.createElement('div')
+const restartbutton = document.createElement('button')
+const backToMenubutton = document.createElement('button')
+
+optionsContainer.classList.add('game-options')
+restartbutton.classList.add('restart-button')
+backToMenubutton.classList.add('back-to-menu-button')
 
 // Winner Vars
 
@@ -31,6 +41,7 @@ initializeGameMenu({
   buttons: {
     exit: exitButton,
     start: startButton,
+    restart: restartbutton
   },
   gameMenu: gameMenu,
   gameTitle: gameTitle,
@@ -45,10 +56,17 @@ initializeGameMenu({
   },
 })
 
+initializeGameOptions({
+  container: optionsContainer,
+  back: backToMenubutton,
+  restart: restartbutton,
+})
+
 // Reset Game Logic & Back To Menu
 
 initializeResetAndBackToMenu({
   gameMenu,
   rootCards,
   winner: { container: winnerContainer, heading: winnerHeading },
+  buttons: { back: backToMenubutton, restart: restartbutton },
 })

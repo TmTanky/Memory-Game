@@ -2,7 +2,8 @@ import { startCardsFunctionality } from './cardFunctionality'
 
 export const createCards = (
   rootCards: HTMLDivElement,
-  winner: { container: HTMLDivElement; heading: HTMLHeadElement }
+  winner: { container: HTMLDivElement; heading: HTMLHeadElement },
+  restart: HTMLButtonElement
 ) => {
   const { container, heading } = winner
   document.body.appendChild(rootCards)
@@ -29,5 +30,5 @@ export const createCards = (
     cardContainer.value = item
     cardContainer.id = `${item}${index}`
   })
-  startCardsFunctionality(container, heading)
+  startCardsFunctionality(container, heading, restart)
 }
