@@ -21,37 +21,33 @@
   margin: 15px;
   border-radius: 8px;
   border: solid 2px black;
+  position: relative;
+  transition-duration: 0.5s;
+  position: relative;
+  font-size: 20px;
+
+  .front-card {
+    transform: rotateY(180deg);
+    background-color: red;
+    visibility: hidden;
+  }
 }
+
+// Card Transitions
 
 .show {
-  transition: ease-out;
+  transform: rotateY(180deg);
   transition-duration: 0.5s;
-  transform: rotateY(180deg);
-  transform-style: preserve-3d;
+
+  // .front-card {
+  //   visibility: hidden;
+  // }
 }
 
-.front {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background-color: yellow;
-}
-
-.back {
-  backface-visibility: hidden;
-  background-color: blue;
-  transform: rotateY(180deg);
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
+.remove {
+  transform: scale(1.1);
+  // transition-duration: 2s;
+  // transition-delay: 0.5s;
 }
 
 // Game Menu Stylings
